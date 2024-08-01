@@ -18,7 +18,7 @@ async function printPage(payload) {
         })
         await downloadPDF(response.data, outputPath);
         await printPDFToPrinter(outputPath, 'Pantum_P2500W_series_F8997E__auto');
-        // fs.unlinkSync(outputPath);
+        fs.unlinkSync(outputPath);
         return response.data
     } catch (error) {
         console.error('Error:', error)
@@ -52,8 +52,7 @@ async function downloadPDF(url,outputPath) {
 
 async function printPDFToPrinter(pdfPath, printerName) {
     try {
-      // const options = ["-o landscape", "-o fit-to-page", "-o media=A5"];
-      const options = [];
+      const options = ["-o landscape", "-o fit-to-page", "-o media=A5"];
       await print(pdfPath,printerName, options).then(console.log('......print....'));
       console.log(`PDF sent to printer: ${printerName}`);
     } catch (error) {
