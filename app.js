@@ -6,7 +6,8 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';;
 import os from 'os';
 import cors from "cors"
-
+import dotenv from 'dotenv';
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename)
@@ -17,7 +18,7 @@ import setupRoutes from './src/routes/setupRoutes.js';
 
 const app = express();
 app.use(cors())
-const port = 3000;
+const port = process.env.APP_PORT;
 const localIP = getLocalIP();
 
 // app.use(express.static('src/public'));
