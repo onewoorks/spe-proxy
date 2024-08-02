@@ -5,6 +5,8 @@ import path from "path";
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';;
 import os from 'os';
+import cors from "cors"
+
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename)
@@ -14,31 +16,45 @@ import printRoutes from './src/routes/printRoutes.js';
 import setupRoutes from './src/routes/setupRoutes.js';
 
 const app = express();
+app.use(cors())
 const port = 3000;
+const localIP = getLocalIP();
 
-app.use(express.static('src/public'));
+// app.use(express.static('src/public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 
-app.get('/:page', (req, res) => {
-    const page = req.params.page;
-    const localIP = getLocalIP();
-    const filePath = path.join(__dirname, 'src/public/pages', `${page}.html`);
-    if (fs.existsSync(filePath)) {
-        fs.readFile(filePath, 'utf8', (err, data) => {
-            if (err) {
-                res.status(500).send('Error reading file');
-                return;
-            }
-            const modifiedHtml = data.replace('{{LOCAL_IP}}', localIP);
-            console.log(localIP)
-            res.send(modifiedHtml);
-        });
-    } else {
-        res.status(404).send('Page not found');
+app.get('/', (req, res) => {
+  let filePath = path.join(__dirname, 'src/public/', 'index.html');
+  console.log('.,,')
+  fs.readFile(filePath, 'utf8', (err, data) => {
+    if (err) {
+      res.status(500).send('Error reading file');
+      return;
     }
+    const modifiedHtml = data.replace('{{LOCAL_IP}}', localIP);
+    res.send(modifiedHtml);
+  });
 });
+
+app.get('/:page', (req, res) => {
+  let page = req.params.page;
+  let filePath = path.join(__dirname, 'src/public/pages', `${page}.html`);
+  if (fs.existsSync(filePath)) {
+    fs.readFile(filePath, 'utf8', (err, data) => {
+      if (err) {
+        res.status(500).send('Error reading file');
+        return;
+      }
+      const modifiedHtml = data.replace('{{LOCAL_IP}}', localIP);
+      res.send(modifiedHtml);
+    });
+  } else {
+    res.status(404).send('Page not found');
+  }
+});
+
 
 app.use('/api/mykad', mykadRoutes);
 app.use('/api/print', printRoutes);
@@ -58,5 +74,5 @@ function getLocalIP() {
 }
 
 app.listen(port, () => {
-    console.log(`SPE Proxy app listening at http://localhost:${port}`);
+    console.log(`SPE Proxy app listening at http://${localIP}:${port}`);
 });

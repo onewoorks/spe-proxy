@@ -17,7 +17,7 @@ async function printPage(payload) {
             },
         })
         await downloadPDF(response.data, outputPath);
-        await printPDFToPrinter(outputPath, 'Pantum_P2500W_series_F8997E__auto');
+        await printPDFToPrinter(outputPath, 'Brother_HL_1210W_series');
         fs.unlinkSync(outputPath);
         return response.data
     } catch (error) {
