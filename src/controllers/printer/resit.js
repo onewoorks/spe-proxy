@@ -3,6 +3,8 @@ import wkhtmltopdf from 'wkhtmltopdf'
 import fs from 'fs'
 import { print } from "unix-print";
 import path from 'path';
+import dotenv from 'dotenv';
+dotenv.config();
 
 export function printResit(payload) {
     printPage(payload)
@@ -30,7 +32,7 @@ async function downloadPDF(url,outputPath) {
     try {
       const response = await axios({
         method: 'get',
-        url: 'http://localhost:8000/'+url,
+        url: `${process.env.SPE_HELPERS}/${url}`,
         responseType: 'arraybuffer'
       });
     
