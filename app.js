@@ -57,6 +57,6 @@ function getLocalIP() {
   return 'Unable to determine local IP';
 }
 
-app.listen(port, () => {
+app.listen(port,'0.0.0.0', () => {
     console.log(`SPE Proxy app listening at http://localhost:${port}`);
 });
