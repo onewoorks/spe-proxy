@@ -19,7 +19,7 @@ async function printPage(payload) {
             },
         })
         await downloadPDF(response.data, outputPath);
-        await printPDFToPrinter(outputPath, 'Brother_HL_1210W_series');
+        await printPDFToPrinter(outputPath, process.env.DEFAULT_PRINTER);
         fs.unlinkSync(outputPath);
         return response.data
     } catch (error) {
