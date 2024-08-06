@@ -44,9 +44,7 @@ console.log = function (message) {
 };
 
 app.get('/', (req, res) => {
-	console.log('..got visitor')
   let filePath = path.join(__dirname, 'src/public/', 'index.html');
-  console.log('.,,')
   fs.readFile(filePath, 'utf8', (err, data) => {
     if (err) {
       res.status(500).send('Error reading file');
