@@ -7,6 +7,7 @@ dotenv.config();
 const router = express.Router();
 
 router.get('/printer-list', async (req, res) => {
+	console.log('requesting installed printer')
     getPrinters().then(printers => {
         res.send({
             result: "ok",
