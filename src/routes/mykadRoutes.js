@@ -14,8 +14,8 @@ const router = express.Router();
 
 router.get('/read', (req, res) => {
     console.log("Request myKad Reader")
-    const scriptfile = `${rootPath}/src/controllers/mykad/mykad.py`
     console.log("Please wait...")
+    const scriptfile = `${rootPath}/src/controllers/mykad/mykad.py`
     exec(`python3 ${scriptfile}`, (error, stdout, stderr) => {
         if (error) {
             console.error(`exec error: ${error}`);
