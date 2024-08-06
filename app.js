@@ -82,11 +82,6 @@ app.use('/api/mykad', mykadRoutes);
 app.use('/api/print', printRoutes);
 app.use('/api/setup', setupRoutes);
 
-//app.get('/logs', (req, res) => {
-//	console.log('----')
-//   res.sendFile(path.join(__dirname, 'src/public/logs.html'));
-//});
-
 function getLocalIP() {
   const interfaces = os.networkInterfaces();
   for (const interfaceName in interfaces) {

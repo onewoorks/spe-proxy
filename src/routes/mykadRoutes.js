@@ -24,7 +24,10 @@ router.get('/read', (req, res) => {
         let result;
         try {
             result = JSON.parse(stdout);
-            console.log(stdout)
+            console.log("================================================")
+            console.log(`No IC \t: ${result.person.ic}`)
+            console.log(`Nama \t: ${result.person.name.trim()}`)
+            console.log("================================================")
         } catch (error) {
             console.warn('Invalid JSON output:', stdout);
             result = { error: 'Invalid response from mykad reader' };
