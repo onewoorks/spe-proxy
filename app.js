@@ -33,11 +33,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  console.log('Apps connected!!');
 });
 
 const originalConsoleLog = console.log;
 console.log = function (message) {
+    
     io.emit('logMessage', message);
     originalConsoleLog.apply(console, arguments);
 };

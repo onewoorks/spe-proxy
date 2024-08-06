@@ -29,6 +29,7 @@ async function printPage(payload) {
 }
 
 async function downloadPDF(url,outputPath) {
+    console.log("Downloading invoices...")
     try {
       const response = await axios({
         method: 'get',
