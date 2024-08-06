@@ -36,6 +36,18 @@
             -moz-user-select: none;
             user-select: none;
         }
+	#logContainer {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .logMessage {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+        }
 
         @media (min-width: 768px) {
             .bd-placeholder-img-lg {
@@ -181,6 +193,8 @@
         </ul>
     </div>
 
+<div id="logContainer"></div>
+
 
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <header class="mb-auto">
@@ -204,6 +218,18 @@
     <script src="https://getbootstrap.com/docs/5.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
         crossorigin="anonymous"></script>
+
+<script>
+        const socket = io();
+        const logContainer = document.getElementById('logContainer');
+
+        socket.on('logMessage', (message) => {
+            const logMessage = document.createElement('div');
+            logMessage.classList.add('logMessage');
+            logMessage.textContent = message;
+            logContainer.appendChild(logMessage);
+        });
+    </script>
 
 </body>
 

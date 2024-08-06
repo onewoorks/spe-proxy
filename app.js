@@ -7,6 +7,9 @@ import { dirname } from 'path';;
 import os from 'os';
 import cors from "cors"
 import dotenv from 'dotenv';
+import { Server } from 'socket.io'
+import { createServer } from 'http'
+
 dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
@@ -17,16 +20,30 @@ import printRoutes from './src/routes/printRoutes.js';
 import setupRoutes from './src/routes/setupRoutes.js';
 
 const app = express();
+const server = createServer(app)
+const io = new Server(server)
+
 app.use(cors())
 const port = process.env.APP_PORT;
 const localIP = getLocalIP();
+
 
 // app.use(express.static('src/public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+io.on('connection', (socket) => {
+  console.log('a user connected');
+});
+
+const originalConsoleLog = console.log;
+console.log = function (message) {
+    io.emit('logMessage', message);
+    originalConsoleLog.apply(console, arguments);
+};
 
 app.get('/', (req, res) => {
+	console.log('..got visitor')
   let filePath = path.join(__dirname, 'src/public/', 'index.html');
   console.log('.,,')
   fs.readFile(filePath, 'utf8', (err, data) => {
@@ -37,6 +54,11 @@ app.get('/', (req, res) => {
     const modifiedHtml = data.replace('{{LOCAL_IP}}', localIP);
     res.send(modifiedHtml);
   });
+});
+
+app.get('/logs', (req, res) => {
+        console.log('----')
+    	res.sendFile(path.join(__dirname, 'src/public/logs.html'));
 });
 
 app.get('/:page', (req, res) => {
@@ -61,6 +83,11 @@ app.use('/api/mykad', mykadRoutes);
 app.use('/api/print', printRoutes);
 app.use('/api/setup', setupRoutes);
 
+//app.get('/logs', (req, res) => {
+//	console.log('----')
+//   res.sendFile(path.join(__dirname, 'src/public/logs.html'));
+//});
+
 function getLocalIP() {
   const interfaces = os.networkInterfaces();
   for (const interfaceName in interfaces) {
@@ -74,7 +101,7 @@ function getLocalIP() {
   return 'Unable to determine local IP';
 }
 
-app.listen(port, () => {
+server.listen(port, () => {
     console.log(`SPE Proxy app listening at http://${localIP}:${port}`);
 });
 
