@@ -13,17 +13,17 @@ import express from 'express';
 const router = express.Router();
 
 router.get('/read', (req, res) => {
+    console.log("Request myKad Reader")
     const scriptfile = `${rootPath}/src/controllers/mykad/mykad.py`
     exec(`python3 ${scriptfile}`, (error, stdout, stderr) => {
         if (error) {
             console.error(`exec error: ${error}`);
             return res.status(500).send('Error executing Python script');
         }
-        // Assuming the Python script outputs JSON
-        // const result = JSON.parse(stdout);
         let result;
         try {
             result = JSON.parse(stdout);
+            console.log(result)
         } catch (error) {
             console.warn('Invalid JSON output:', stdout);
             result = { error: 'Invalid response from mykad reader' };

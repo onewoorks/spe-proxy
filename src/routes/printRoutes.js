@@ -7,7 +7,7 @@ dotenv.config();
 const router = express.Router();
 
 router.get('/printer-list', async (req, res) => {
-	console.log('requesting installed printer')
+	console.log('Requesting installed printer at SPE Proxy Devices')
     getPrinters().then(printers => {
         res.send({
             result: "ok",
@@ -23,6 +23,8 @@ router.get('/printer-list', async (req, res) => {
 });
 
 router.get('/resit/:domain/:tag/:resit/:module', async (req, res) =>{
+    console.log('Requesting sales invoice from server...')
+    
     const data = {
         domain: req.params.domain,
         tenant_id: req.params.tag,
@@ -30,6 +32,8 @@ router.get('/resit/:domain/:tag/:resit/:module', async (req, res) =>{
         module: req.params.module,
         url: `${process.env.SPE_HELPERS}/api/resit/create-terus`
       }
+    console.log(`Resit : ${data.module}`)
+    console.log(`No Resit : ${data.resit_no}`)
     try {
         const result = printResit(data);
         res.json(result);
