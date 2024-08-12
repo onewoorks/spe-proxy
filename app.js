@@ -60,6 +60,10 @@ app.get('/logs', (req, res) => {
     	res.sendFile(path.join(__dirname, 'src/public/logs.html'));
 });
 
+app.get('/float', (req,res) => {
+	res.sendFile(path.join(__dirname, 'src/public/float.html'));
+});
+
 app.get('/:page', (req, res) => {
   let page = req.params.page;
   let filePath = path.join(__dirname, 'src/public/pages', `${page}.html`);
