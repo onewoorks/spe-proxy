@@ -33,7 +33,7 @@
         socket.on('logMessage', (message) => {
             const logMessage = document.createElement('div');
             const now = new Date();
-            const dateTimeString = now.toLocaleString();
+            const dateTimeString = now.toLocaleTimeString();
             logMessage.classList.add('logMessage');
             logMessage.innerHTML = `<span class='txt_time'>${dateTimeString}</span> : </span> ${message}`;
             logContainer.prepend(logMessage);
