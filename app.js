@@ -9,6 +9,7 @@ import cors from "cors"
 import dotenv from 'dotenv';
 import { Server } from 'socket.io'
 import { createServer } from 'http'
+//import https from 'https'
 
 dotenv.config();
 
@@ -20,6 +21,10 @@ import printRoutes from './src/routes/printRoutes.js';
 import setupRoutes from './src/routes/setupRoutes.js';
 
 const app = express();
+
+//const key = fs.readFileSync("private.key", "utf-8");
+//const cert = fs.readFileSync("server.crt", "utf-8");
+
 const server = createServer(app)
 const io = new Server(server)
 
@@ -103,3 +108,6 @@ server.listen(port, () => {
     console.log(`SPE Proxy app listening at http://${localIP}:${port}`);
 });
 
+//https.createServer({ key, cert }, app).listen(3001);
+
+//module.exports = app;
