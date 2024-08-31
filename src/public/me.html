@@ -42,14 +42,14 @@
 	#logContainer {
             font-family: 'Source Code Pro', monospace;
             background-color: #000;
-            padding: 10px;
+            padding: 20px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            height: 320px;
+            height: 400px;
             overflow-y: auto;
             text-align: left;
             color: green;
-            font-size: 1.3rem;
+            font-size: 0.9rem;
             display: flex;
             flex-direction: column-reverse;
         }
@@ -205,7 +205,14 @@
 
         <main class="px-3">
             <h1>SPE Proxy App</h1>
+            <span id="localIP">{{LOCAL_IP}}</span>
+            <p class="lead">Servis integrasi diantara devices dikedai (premis) dan SPE</p>
+
             <div id="logContainer" class="mt-4"></div>
+
+            <div class="mt-4">
+                <a href="/setup" class="btn btn-primary btn-sm">Configuration</a>
+            </div>
         </main>
 
         <footer class="mt-auto text-white-50">
